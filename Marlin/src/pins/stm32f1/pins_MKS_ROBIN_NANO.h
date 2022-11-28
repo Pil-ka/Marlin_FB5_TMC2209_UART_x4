@@ -46,8 +46,8 @@
 
 #include "pins_MKS_ROBIN_NANO_common.h"
 
-//#define PRINTER_NAME_FB5
-#define PRINTER_NAME_FB4S
+#define PRINTER_NAME_FB5
+//#define PRINTER_NAME_FB4S
 
 #ifdef PRINTER_NAME_FB5
   #ifdef PRINTER_NAME_FB4S
@@ -153,16 +153,16 @@ https://sergey1560.github.io/fb4s_howto/mks_pwc/
   // Software serial
   //
   #define X_SERIAL_TX_PIN                   PA6
-  #define X_SERIAL_RX_PIN                   PA1
+  #define X_SERIAL_RX_PIN                   PA6
 
   #define Y_SERIAL_TX_PIN                   PA6
-  #define Y_SERIAL_RX_PIN                   PA1
+  #define Y_SERIAL_RX_PIN                   PA6
 
   #define Z_SERIAL_TX_PIN                   PA6
-  #define Z_SERIAL_RX_PIN                   PA1
+  #define Z_SERIAL_RX_PIN                   PA6
 
   #define E0_SERIAL_TX_PIN                  PA6
-  #define E0_SERIAL_RX_PIN                  PA1
+  #define E0_SERIAL_RX_PIN                  PA6
 
   // Reduce baud rate to improve software serial reliability
   #define TMC_BAUD_RATE 19200

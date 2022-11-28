@@ -39,6 +39,7 @@
 #define COLOR_GREY            0x7BEF  // #808080
 #define COLOR_DARKGREY        0x4208  // #404040
 #define COLOR_DARKGREY2       0x39E7  // #303030
+#define COLOR_DARKGREY3       0x2104  // #222222
 #define COLOR_DARK            0x0003  // #000019
 
 #define COLOR_RED             0xF800  // #FF0000
@@ -46,7 +47,7 @@
 #define COLOR_LIME            0x7E00  // #00FF00
 #define COLOR_BLUE            0x001F  // #0000FF
 #define COLOR_LIGHT_BLUE      0x061F  // #00C3FF
-#define COLOR_YELLOW          0xFFE0  // #FFFF00
+#define COLOR_YELLOW          0xFF60  // #FFF000
 #define COLOR_MAGENTA         0xF81F  // #FF00FF
 #define COLOR_FUCHSIA         0xF81F  // #FF00FF
 #define COLOR_CYAN            0x07FF  // #00FFFF
@@ -54,7 +55,7 @@
 #define COLOR_DODGER_BLUE     0x041F  // #0080FF
 #define COLOR_VIVID_VIOLET    0x7933  // #772399
 
-#define COLOR_DARK_PURPLE     0x9930  // #992380
+#define COLOR_DARK_PURPLE     0x7254  //0x9930  // #992380
 
 #define COLOR_MAROON          0x7800  // #800000
 #define COLOR_GREEN           0x03E0  // #008000
@@ -68,13 +69,11 @@
 #define COLOR_DARK_ORANGE     0xFC40  // #FF8C00
 #define COLOR_CORAL_RED       0xF9E7  // #FF3F3F
 
-#define COLOR_DARK_PURPLE     0x9930  // #992380
-
 #ifndef COLOR_BACKGROUND
-  #define COLOR_BACKGROUND    0x20AC  // #1E156E
+  #define COLOR_BACKGROUND    COLOR_DARKGREY3 // def color = 0x20AC  // #1E156E
 #endif
 #ifndef COLOR_SELECTION_BG
-  #define COLOR_SELECTION_BG  0x9930  // #992380
+  #define COLOR_SELECTION_BG  COLOR_DARK_PURPLE // 0x9930  // #992380
 #endif
 #ifndef COLOR_WEBSITE_URL
   #define COLOR_WEBSITE_URL   0x03B7  // #0075BD
@@ -124,7 +123,7 @@
   #define COLOR_PROGRESS_FRAME    COLOR_WHITE
 #endif
 #ifndef COLOR_PROGRESS_BAR
-  #define COLOR_PROGRESS_BAR      COLOR_BLUE
+  #define COLOR_PROGRESS_BAR      COLOR_DARK_PURPLE
 #endif
 #ifndef COLOR_PROGRESS_BG
   #define COLOR_PROGRESS_BG       COLOR_BLACK
