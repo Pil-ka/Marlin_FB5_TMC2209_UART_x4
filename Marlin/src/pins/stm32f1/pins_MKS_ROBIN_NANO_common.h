@@ -165,7 +165,7 @@ BlTouch
 #endif
 
 #define SDIO_SUPPORT
-#define SDIO_CLOCK                       18000000  // 4.5 MHz
+#define SDIO_CLOCK                       4500000  // 4.5 MHz
 #define SD_DETECT_PIN                       PD12
 #define ONBOARD_SD_CS_PIN                   PC11
 
@@ -209,8 +209,8 @@ BlTouch
   #define TFT_BUFFER_SIZE                  14400
 #endif
 
-#define HAS_SPI_FLASH                          1
-#if HAS_SPI_FLASH
+#define SPI_FLASH
+#if ENABLED(SPI_FLASH)
   #define SPI_FLASH_SIZE               0x1000000  // 16MB
   #define SPI_FLASH_CS_PIN                  PB12
   #define SPI_FLASH_MOSI_PIN                PB15

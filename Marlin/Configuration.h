@@ -21,6 +21,128 @@
  */
 #pragma once
 
+#include "flying_bear_drivers.h"
+/***
+Конфигурация драйверов принтера. 
+ 
+В параметре PRINTER_DRV_TYPE нужно установить параметр, соответствующий вашей конфигурации:
+
+RN11_ALL_2208   - плата  Robin Nano 1.1 (FlyingBear Reborn 2.0), все драйвера 2208, 2225, 2209 или 2226
+RN11_A4988      - плата Robin Nano 1.1, все драйвера A4988
+RN11_A4988_2208 - плата Robin Nano 1.1, 2 драйвера A4988, 2 драйвера 2208
+RB30            - плата FlyingBear Reborn 3.0
+
+RN13_ALL2208    - плата Robin Nano v1.3, все драйвера TMC 2208/2209
+RN13_A4988_2208 - плата Robin Nano v1.3, 2 драйвра A4988, 2 драйвера TMC 2208/2209
+
+RN13S           - плата Robin Nano-s 1.3
+*/
+#ifndef AUTO_BUILD
+  #define PRINTER_DRV_TYPE RN11_ALL_2208
+#endif
+
+#if PRINTER_DRV_TYPE == RN11_ALL_2208
+  #define USR_E0_DIR true
+  #define USR_E0_TYPE TMC2208_STANDALONE
+  
+  #define USR_X_DIR false
+  #define USR_X_TYPE TMC2208_STANDALONE
+  
+  #define USR_Y_DIR false
+  #define USR_Y_TYPE TMC2208_STANDALONE
+  
+  #define USR_Z_DIR true
+  #define USR_Z_TYPE TMC2208_STANDALONE
+#endif
+
+#if PRINTER_DRV_TYPE == RN11_A4988
+  #define USR_E0_DIR false
+  #define USR_E0_TYPE A4988
+
+  #define USR_X_DIR true
+  #define USR_X_TYPE A4988
+
+  #define USR_Y_DIR true
+  #define USR_Y_TYPE A4988
+
+  #define USR_Z_DIR false
+  #define USR_Z_TYPE A4988
+#endif
+
+#if PRINTER_DRV_TYPE == RN11_A4988_2208
+  #define USR_E0_DIR false
+  #define USR_E0_TYPE A4988
+
+  #define USR_X_DIR false
+  #define USR_X_TYPE TMC2208_STANDALONE
+
+  #define USR_Y_DIR false
+  #define USR_Y_TYPE TMC2208_STANDALONE
+
+  #define USR_Z_DIR false
+  #define USR_Z_TYPE A4988
+#endif
+
+#if PRINTER_DRV_TYPE == RB30
+  #define USR_E0_DIR false
+  #define USR_E0_TYPE TMC2208_STANDALONE
+
+  #define USR_X_DIR true
+  #define USR_X_TYPE TMC2208_STANDALONE
+
+  #define USR_Y_DIR true
+  #define USR_Y_TYPE TMC2208_STANDALONE
+
+  #define USR_Z_DIR false
+  #define USR_Z_TYPE TMC2208_STANDALONE
+#endif
+
+#if PRINTER_DRV_TYPE == RN13_ALL2208
+  #define USR_E0_DIR true
+  #define USR_E0_TYPE TMC2208_STANDALONE
+
+  #define USR_X_DIR false
+  #define USR_X_TYPE TMC2208_STANDALONE
+
+  #define USR_Y_DIR false
+  #define USR_Y_TYPE TMC2208_STANDALONE
+
+  #define USR_Z_DIR true
+  #define USR_Z_TYPE TMC2208_STANDALONE
+#endif
+
+#if PRINTER_DRV_TYPE == RN13_A4988_2208
+  #define USR_E0_DIR false
+  #define USR_E0_TYPE A4988
+  
+  #define USR_X_DIR false
+  #define USR_X_TYPE TMC2208_STANDALONE
+  
+  #define USR_Y_DIR false
+  #define USR_Y_TYPE TMC2208_STANDALONE
+  
+  #define USR_Z_DIR false
+  #define USR_Z_TYPE A4988
+#endif
+
+#if PRINTER_DRV_TYPE == RN13S
+  #ifdef EXT_EXTRUDER_DRIVER
+    #define USR_E0_DIR true
+    #define USR_E0_TYPE TMC2209_STANDALONE
+  #else
+    #define USR_E0_DIR false
+    #define USR_E0_TYPE TMC2208_STANDALONE
+  #endif
+  
+  #define USR_X_DIR true
+  #define USR_X_TYPE TMC2208_STANDALONE
+
+  #define USR_Y_DIR true
+  #define USR_Y_TYPE TMC2208_STANDALONE
+  
+  #define USR_Z_DIR false
+  #define USR_Z_TYPE TMC2208_STANDALONE
+#endif
 /**
  * Configuration.h
  *
@@ -60,7 +182,7 @@
 // @section info
 
 // Author info of this build printed to the host during boot and M115
-#define STRING_CONFIG_H_AUTHOR "(Pil_ka)" // Who made the changes.
+#define STRING_CONFIG_H_AUTHOR "(Sergey, FlyingbearGhost4S/5)" // Who made the changes.
 //#define CUSTOM_VERSION_FILE Version.h // Path from the root directory (no quotes)
 
 /**
@@ -135,7 +257,7 @@
 //#define BLUETOOTH
 
 // Name displayed in the LCD "Ready" message and Info menu
-#define CUSTOM_MACHINE_NAME "FBGhost 5"
+#define CUSTOM_MACHINE_NAME "FBGhost 4s/5"
 
 // Printer's unique ID, used by some programs to differentiate between machines.
 // Choose your own or use a service like https://www.uuidgenerator.net/version4
@@ -158,9 +280,9 @@
  *          TMC5130, TMC5130_STANDALONE, TMC5160, TMC5160_STANDALONE
  * :['A4988', 'A5984', 'DRV8825', 'LV8729', 'TB6560', 'TB6600', 'TMC2100', 'TMC2130', 'TMC2130_STANDALONE', 'TMC2160', 'TMC2160_STANDALONE', 'TMC2208', 'TMC2208_STANDALONE', 'TMC2209', 'TMC2209_STANDALONE', 'TMC26X', 'TMC26X_STANDALONE', 'TMC2660', 'TMC2660_STANDALONE', 'TMC5130', 'TMC5130_STANDALONE', 'TMC5160', 'TMC5160_STANDALONE']
  */
-#define X_DRIVER_TYPE  TMC2209
-#define Y_DRIVER_TYPE  TMC2209
-#define Z_DRIVER_TYPE  TMC2209
+#define X_DRIVER_TYPE  USR_X_TYPE
+#define Y_DRIVER_TYPE  USR_Y_TYPE
+#define Z_DRIVER_TYPE  USR_Z_TYPE
 //#define X2_DRIVER_TYPE A4988
 //#define Y2_DRIVER_TYPE A4988
 //#define Z2_DRIVER_TYPE A4988
@@ -172,7 +294,7 @@
 //#define U_DRIVER_TYPE  A4988
 //#define V_DRIVER_TYPE  A4988
 //#define W_DRIVER_TYPE  A4988
-#define E0_DRIVER_TYPE TMC2209
+#define E0_DRIVER_TYPE USR_E0_TYPE
 //#define E1_DRIVER_TYPE A4988
 //#define E2_DRIVER_TYPE A4988
 //#define E3_DRIVER_TYPE A4988
@@ -496,7 +618,7 @@
  *    30 : 100kΩ  Kis3d Silicone heating mat 200W/300W with 6mm precision cast plate (EN AW 5083) NTC100K - beta 3950
  *    60 : 100kΩ  Maker's Tool Works Kapton Bed Thermistor - beta 3950
  *    61 : 100kΩ  Formbot/Vivedino 350°C Thermistor - beta 3950
- *    66 : 4.7MΩ  Dyze Design High Temperature Thermistor
+ *    66 : 4.7MΩ  Dyze Design / Trianglelab T-D500 500°C High Temperature Thermistor
  *    67 : 500kΩ  SliceEngineering 450°C Thermistor
  *    68 : PT100 amplifier board from Dyze Design
  *    70 : 100kΩ  bq Hephestos 2
@@ -518,6 +640,7 @@
  *   110 : Pt100  with 1kΩ pullup (atypical)
  *   147 : Pt100  with 4.7kΩ pullup
  *  1010 : Pt1000 with 1kΩ pullup (atypical)
+ *  1022 : Pt1000 with 2.2kΩ pullup
  *  1047 : Pt1000 with 4.7kΩ pullup (E3D)
  *    20 : Pt100  with circuit in the Ultimainboard V2.x with mainboard ADC reference voltage = INA826 amplifier-board supply voltage.
  *                NOTE: (1) Must use an ADC input with no pullup. (2) Some INA826 amplifiers are unreliable at 3.3V so consider using sensor 147, 110, or 21.
@@ -535,7 +658,7 @@
  *   999 : Dummy Table that ALWAYS reads 100°C or the temperature defined below.
  *
  */
-#define TEMP_SENSOR_0 5
+#define TEMP_SENSOR_0 1
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
@@ -562,6 +685,10 @@
 #if TEMP_SENSOR_IS_MAX_TC(1)
   #define MAX31865_SENSOR_OHMS_1      100
   #define MAX31865_CALIBRATION_OHMS_1 430
+#endif
+#if TEMP_SENSOR_IS_MAX_TC(2)
+  #define MAX31865_SENSOR_OHMS_2      100
+  #define MAX31865_CALIBRATION_OHMS_2 430
 #endif
 
 #if HAS_E_TEMP_SENSOR
@@ -651,7 +778,7 @@
 #define PID_K1 0.95      // Smoothing factor within any PID loop
 
 #if ENABLED(PIDTEMP)
-  //#define PID_DEBUG             // Print PID debug data to the serial port. Use 'M303 D' to toggle activation.
+  #define PID_DEBUG             // Print PID debug data to the serial port. Use 'M303 D' to toggle activation.
   //#define PID_PARAMS_PER_HOTEND // Use separate PID parameters for each extruder (useful for mismatched extruders)
                                   // Set/get with G-code: M301 E[extruder number, 0-2]
 
@@ -662,9 +789,9 @@
     #define DEFAULT_Ki_LIST {   1.08,   1.08 }
     #define DEFAULT_Kd_LIST { 114.00, 114.00 }
   #else
-    #define DEFAULT_Kp  17.3
-    #define DEFAULT_Ki   1.74
-    #define DEFAULT_Kd  42.9
+    #define DEFAULT_Kp  17.04
+    #define DEFAULT_Ki   1.31
+    #define DEFAULT_Kd  55.34
   #endif
 #endif
 
@@ -743,13 +870,13 @@
 
 #if ENABLED(PIDTEMPBED)
   //#define MIN_BED_POWER 0
-  //#define PID_BED_DEBUG // Print Bed PID debug data to the serial port.
+  #define PID_BED_DEBUG // Print Bed PID debug data to the serial port.
 
   // 120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
   // from FOPDT model - kp=.39 Tp=405 Tdead=66, Tc set to 79.2, aggressive factor of .15 (vs .1, 1, 10)
-  #define DEFAULT_bedKp 41.4
-  #define DEFAULT_bedKi 7.29
-  #define DEFAULT_bedKd 156.8
+  #define DEFAULT_bedKp 40.68
+  #define DEFAULT_bedKi 7.93
+  #define DEFAULT_bedKd 139.15
   // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
 #endif // PIDTEMPBED
 
@@ -873,7 +1000,7 @@
 //#define POLARGRAPH
 #if ENABLED(POLARGRAPH)
   #define POLARGRAPH_MAX_BELT_LEN 1035.0
-  #define POLAR_SEGMENTS_PER_SECOND 5
+  #define DEFAULT_SEGMENTS_PER_SECOND 5
 #endif
 
 // @section delta
@@ -885,28 +1012,26 @@
   // Make delta curves from many straight lines (linear interpolation).
   // This is a trade-off between visible corners (not enough segments)
   // and processor overload (too many expensive sqrt calls).
-  #define DELTA_SEGMENTS_PER_SECOND 200
+  #define DEFAULT_SEGMENTS_PER_SECOND 200
 
   // After homing move down to a height where XY movement is unconstrained
   //#define DELTA_HOME_TO_SAFE_ZONE
 
   // Delta calibration menu
-  // uncomment to add three points calibration menu option.
+  // Add three-point calibration to the MarlinUI menu.
   // See http://minow.blogspot.com/index.html#4918805519571907051
   //#define DELTA_CALIBRATION_MENU
 
-  // uncomment to add G33 Delta Auto-Calibration (Enable EEPROM_SETTINGS to store results)
+  // G33 Delta Auto-Calibration. Enable EEPROM_SETTINGS to store results.
   //#define DELTA_AUTO_CALIBRATION
 
-  // NOTE NB all values for DELTA_* values MUST be floating point, so always have a decimal point in them
-
   #if ENABLED(DELTA_AUTO_CALIBRATION)
-    // set the default number of probe points : n*n (1 -> 7)
+    // Default number of probe points : n*n (1 -> 7)
     #define DELTA_CALIBRATION_DEFAULT_POINTS 4
   #endif
 
   #if EITHER(DELTA_AUTO_CALIBRATION, DELTA_CALIBRATION_MENU)
-    // Set the steprate for papertest probing
+    // Step size for paper-test probing
     #define PROBE_MANUALLY_STEP 0.05      // (mm)
   #endif
 
@@ -951,7 +1076,7 @@
 //#define MP_SCARA
 #if EITHER(MORGAN_SCARA, MP_SCARA)
   // If movement is choppy try lowering this value
-  #define SCARA_SEGMENTS_PER_SECOND 200
+  #define DEFAULT_SEGMENTS_PER_SECOND 200
 
   // Length of inner and outer support arms. Measure arm lengths precisely.
   #define SCARA_LINKAGE_1 150       // (mm)
@@ -987,18 +1112,18 @@
 // Enable for TPARA kinematics and configure below
 //#define AXEL_TPARA
 #if ENABLED(AXEL_TPARA)
-  #define DEBUG_ROBOT_KINEMATICS
-  #define ROBOT_SEGMENTS_PER_SECOND 200
+  #define DEBUG_TPARA_KINEMATICS
+  #define DEFAULT_SEGMENTS_PER_SECOND 200
 
   // Length of inner and outer support arms. Measure arm lengths precisely.
-  #define ROBOT_LINKAGE_1 120       // (mm)
-  #define ROBOT_LINKAGE_2 120       // (mm)
+  #define TPARA_LINKAGE_1 120       // (mm)
+  #define TPARA_LINKAGE_2 120       // (mm)
 
   // SCARA tower offset (position of Tower relative to bed zero position)
   // This needs to be reasonably accurate as it defines the printbed position in the SCARA space.
-  #define ROBOT_OFFSET_X    0       // (mm)
-  #define ROBOT_OFFSET_Y    0       // (mm)
-  #define ROBOT_OFFSET_Z    0       // (mm)
+  #define TPARA_OFFSET_X    0       // (mm)
+  #define TPARA_OFFSET_Y    0       // (mm)
+  #define TPARA_OFFSET_Z    0       // (mm)
 
   #define SCARA_FEEDRATE_SCALING  // Convert XY feedrate from mm/s to degrees/s on the fly
 
@@ -1164,9 +1289,8 @@
  * Override with M92
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-//#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 400 }   //microstep = 16
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 160, 160, 800, 1384 }   //microstep = 32, nema14 on E0
-	
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 400 }
+
 /**
  * Default Max Feed Rate (linear=mm/s, rotational=°/s)
  * Override with M203
@@ -1176,7 +1300,7 @@
 
 #define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
-  #define MAX_FEEDRATE_EDIT_VALUES    { 300, 300, 10, 150 } // ...or, set your own edit limits
+  #define MAX_FEEDRATE_EDIT_VALUES    { 300, 300, 10, 70 } // ...or, set your own edit limits
 #endif
 
 /**
@@ -1200,9 +1324,9 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-#define DEFAULT_ACCELERATION          1800    // X, Y, Z and E acceleration for printing moves
+#define DEFAULT_ACCELERATION          1500    // X, Y, Z and E acceleration for printing moves
 #define DEFAULT_RETRACT_ACCELERATION  2000    // E acceleration for retracts
-#define DEFAULT_TRAVEL_ACCELERATION   1800    // X, Y, Z acceleration for travel (non printing) moves
+#define DEFAULT_TRAVEL_ACCELERATION   1500    // X, Y, Z acceleration for travel (non printing) moves
 
 /**
  * Default Jerk limits (mm/s)
@@ -1214,8 +1338,8 @@
  */
 #define CLASSIC_JERK
 #if ENABLED(CLASSIC_JERK)
-  #define DEFAULT_XJERK 15.0
-  #define DEFAULT_YJERK 15.0
+  #define DEFAULT_XJERK 10.0
+  #define DEFAULT_YJERK 10.0
   #define DEFAULT_ZJERK  0.5
   //#define DEFAULT_IJERK  0.3
   //#define DEFAULT_JJERK  0.3
@@ -1228,7 +1352,7 @@
 
   #define LIMITED_JERK_EDITING        // Limit edit via M205 or LCD to DEFAULT_aJERK * 2
   #if ENABLED(LIMITED_JERK_EDITING)
-    #define MAX_JERK_EDIT_VALUES { 30, 30, 2, 30 } // ...or, set your own edit limits
+    #define MAX_JERK_EDIT_VALUES { 30, 30, 2, 20 } // ...or, set your own edit limits
   #endif
 #endif
 
@@ -1636,85 +1760,6 @@
 
 // @section motion
 
-/**************** Driver DIR Configuration *******************/
-//Robin Nano v1.1 and v1.2 configs:
-// 4 x TMC 2208/2209
-#define ALL_DRV_2208
-
-// 4 x A4988
-//#define FB_4S_STOCK
-
-// 2 x A4988, 2 x TMC 2208/2209
-//#define FB_5_STOCK
-
-//Robin Nano v1.3 and Robin Nano-S v1.3:
-//Robin Nano-S v1.3
-//#define FB_5_NANO_S_V1_3
-
-//Robin Nano v1.3 with 4 x TMC 2208/2209
-//#define FB_5_NANO_V1_3_4TMC
-
-//Robin Nano v1.3 with 2x A4988 and 2 x TMC 2208/2209
-//#define FB_5_NANO_V1_3
-
-//Flying Bear Reborn 3.0
-//#define FB_5_REBORN_3_0
-
-#ifdef ALL_DRV_2208
-#define USR_E0_DIR true
-#define USR_X_DIR true
-#define USR_Y_DIR false
-#define USR_Z_DIR true
-#endif
-
-#ifdef FB_4S_STOCK
-#define USR_E0_DIR false
-#define USR_X_DIR true
-#define USR_Y_DIR true
-#define USR_Z_DIR false
-#endif
-
-#ifdef FB_5_STOCK
-#define USR_E0_DIR false
-#define USR_X_DIR false
-#define USR_Y_DIR false
-#define USR_Z_DIR false
-#endif
-
-#ifdef FB_5_NANO_S_V1_3
-#ifdef EXT_EXTRUDER_DRIVER
-  #define USR_E0_DIR true
-#else
-  #define USR_E0_DIR false
-#endif
-#define USR_X_DIR true
-#define USR_Y_DIR true
-#define USR_Z_DIR false
-#endif
-
-#ifdef FB_5_REBORN_3_0
-#define USR_E0_DIR false
-#define USR_X_DIR true
-#define USR_Y_DIR true
-#define USR_Z_DIR false
-#endif
-
-
-#ifdef FB_5_NANO_V1_3
-#define USR_E0_DIR false
-#define USR_X_DIR false
-#define USR_Y_DIR false
-#define USR_Z_DIR false
-#endif
-
-#ifdef FB_5_NANO_V1_3_4TMC
-#define USR_E0_DIR true
-#define USR_X_DIR false
-#define USR_Y_DIR false
-#define USR_Z_DIR true
-#endif
-
-
 
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
 #define INVERT_X_DIR USR_X_DIR
@@ -1848,17 +1893,26 @@
  * RAMPS-based boards use SERVO3_PIN for the first runout sensor.
  * For other boards you may need to define FIL_RUNOUT_PIN, FIL_RUNOUT2_PIN, etc.
  */
-//#define FILAMENT_RUNOUT_SENSOR
+#define FILAMENT_RUNOUT_SENSOR
 #if ENABLED(FILAMENT_RUNOUT_SENSOR)
   #define FIL_RUNOUT_ENABLED_DEFAULT false // Enable the sensor on startup. Override with M412 followed by M500.
   #define NUM_RUNOUT_SENSORS   1          // Number of sensors, up to one per extruder. Define a FIL_RUNOUT#_PIN for each.
-  #define FIL_RUNOUT_STATE     FIL_RUNOUT_LEVEL // Pin state indicating that filament is NOT present.
   
-  #if FIL_RUNOUT_LEVEL==LOW
-  #define FIL_RUNOUT_PULLUP               // Use internal pullup for filament runout pins.
-  #else
-  #define FIL_RUNOUT_PULLDOWN           // Use internal pulldown for filament runout pins.
+  #ifdef  PRINTER_NAME_FB5
+    #define FIL_RUNOUT_STATE     LOW // Pin state indicating that filament is NOT present.
+    #define FIL_RUNOUT_PULLUP               // Use internal pullup for filament runout pins.
   #endif
+
+  #ifdef  PRINTER_NAME_FB4S
+    #define FIL_RUNOUT_STATE     HIGH // Pin state indicating that filament is NOT present.
+    #define FIL_RUNOUT_PULLDOWN               // Use internal pullup for filament runout pins.
+  #endif
+  
+  #ifndef FIL_RUNOUT_STATE
+    #define FIL_RUNOUT_STATE     LOW // Pin state indicating that filament is NOT present.
+    #define FIL_RUNOUT_PULLUP               // Use internal pullup for filament runout pins.
+  #endif
+  
   //#define WATCH_ALL_RUNOUT_SENSORS      // Execute runout script on any triggering sensor, not only for the active extruder.
                                           // This is automatically enabled for MIXING_EXTRUDERs.
 
@@ -1952,10 +2006,10 @@
  *   With an LCD controller the process is guided step-by-step.
  */
 //#define AUTO_BED_LEVELING_3POINT
-#define AUTO_BED_LEVELING_LINEAR
+//#define AUTO_BED_LEVELING_LINEAR
 //#define AUTO_BED_LEVELING_BILINEAR
 //#define AUTO_BED_LEVELING_UBL
-//#define MESH_BED_LEVELING
+#define MESH_BED_LEVELING
 
 /**
  * Normally G28 leaves leveling disabled on completion. Enable one of
@@ -1996,17 +2050,21 @@
 #endif
 
 #if ANY(MESH_BED_LEVELING, AUTO_BED_LEVELING_BILINEAR, AUTO_BED_LEVELING_UBL)
-  // Gradually reduce leveling correction until a set height is reached,
-  // at which point movement will be level to the machine's XY plane.
-  // The height can be set with M420 Z<height>
+  /**
+   * Gradually reduce leveling correction until a set height is reached,
+   * at which point movement will be level to the machine's XY plane.
+   * The height can be set with M420 Z<height>
+   */
   #define ENABLE_LEVELING_FADE_HEIGHT
   #if ENABLED(ENABLE_LEVELING_FADE_HEIGHT)
     #define DEFAULT_LEVELING_FADE_HEIGHT 10.0 // (mm) Default fade height.
   #endif
 
-  // For Cartesian machines, instead of dividing moves on mesh boundaries,
-  // split up moves into short segments like a Delta. This follows the
-  // contours of the bed more closely than edge-to-edge straight moves.
+  /**
+   * For Cartesian machines, instead of dividing moves on mesh boundaries,
+   * split up moves into short segments like a Delta. This follows the
+   * contours of the bed more closely than edge-to-edge straight moves.
+   */
   #define SEGMENT_LEVELED_MOVES
   #define LEVELED_SEGMENT_LENGTH 5.0 // (mm) Length of all segments (except the last one)
 
@@ -2093,7 +2151,7 @@
  * Add a bed leveling sub-menu for ABL or MBL.
  * Include a guided procedure if manual probing is enabled.
  */
-//#define LCD_BED_LEVELING
+#define LCD_BED_LEVELING
 
 #if ENABLED(LCD_BED_LEVELING)
   #define MESH_EDIT_Z_STEP  0.025 // (mm) Step size while manually probing Z axis.
@@ -2108,7 +2166,7 @@
   #define BED_TRAMMING_INSET_LFRB { 30, 30, 30, 30 } // (mm) Left, Front, Right, Back insets
   #define BED_TRAMMING_HEIGHT      0.0        // (mm) Z height of nozzle at leveling points
   #define BED_TRAMMING_Z_HOP       4.0        // (mm) Z height of nozzle between leveling points
-  //#define BED_TRAMMING_INCLUDE_CENTER       // Move to the center after the last corner
+  #define BED_TRAMMING_INCLUDE_CENTER       // Move to the center after the last corner
   //#define BED_TRAMMING_USE_PROBE
   #if ENABLED(BED_TRAMMING_USE_PROBE)
     #define BED_TRAMMING_PROBE_TOLERANCE 0.1  // (mm)
@@ -2253,7 +2311,7 @@
  *   M502 - Revert settings to "factory" defaults. (Follow with M500 to init the EEPROM.)
  */
 #define EEPROM_SETTINGS     // Persistent storage with M500 and M501
-//#define DISABLE_M503        // Saves ~2700 bytes of PROGMEM. Disable for release!
+//#define DISABLE_M503        // Saves ~2700 bytes of flash. Disable for release!
 #define EEPROM_CHITCHAT       // Give feedback on EEPROM commands. Disable to save PROGMEM.
 #define EEPROM_BOOT_SILENT    // Keep M503 quiet and only give errors during first load
 #if ENABLED(EEPROM_SETTINGS)
@@ -2284,7 +2342,7 @@ EEPROM_W25Q
 #undef SRAM_EEPROM_EMULATION
 #undef I2C_EEPROM_AT24C16
 #undef SPI_EEPROM_W25Q
-#undef USE_WIRED_EEPROM
+#undef USE_WIRED_EEPROM 
 #define MARLIN_EEPROM_SIZE  4096
 #endif
 
@@ -2328,7 +2386,7 @@ EEPROM_W25Q
 
 #define PREHEAT_2_LABEL       "ABS"
 #define PREHEAT_2_TEMP_HOTEND  250
-#define PREHEAT_2_TEMP_BED     110
+#define PREHEAT_2_TEMP_BED     100
 #define PREHEAT_2_FAN_SPEED     0 // Value from 0 to 255
 
 // @section motion
@@ -2846,7 +2904,7 @@ EEPROM_W25Q
 
 //
 // ReprapWorld Graphical LCD
-// https://reprapworld.com/?products_details&products_id/1218
+// https://reprapworld.com/electronics/3d-printer-modules/autonomous-printing/graphical-lcd-screen-v1-0/
 //
 //#define REPRAPWORLD_GRAPHICAL_LCD
 
@@ -3101,6 +3159,7 @@ EEPROM_W25Q
 //#define ANYCUBIC_LCD_CHIRON
 #if EITHER(ANYCUBIC_LCD_I3MEGA, ANYCUBIC_LCD_CHIRON)
   //#define ANYCUBIC_LCD_DEBUG
+  //#define ANYCUBIC_LCD_GCODE_EXT  // Add ".gcode" to menu entries for DGUS clone compatibility
 #endif
 
 //
@@ -3169,7 +3228,7 @@ EEPROM_W25Q
 //#define MKS_ROBIN_TFT_V1_1R
 
 //
-// 480x320, 3.5", FSMC Stock Display from TronxXY
+// 480x320, 3.5", FSMC Stock Display from Tronxy
 //
 //#define TFT_TRONXY_X5SA
 
@@ -3235,6 +3294,10 @@ EEPROM_W25Q
 //#define TFT_CLASSIC_UI
 #define TFT_COLOR_UI
 //#define TFT_LVGL_UI
+
+#if ENABLED(TFT_COLOR_UI)
+  //#define TFT_SHARED_SPI   // SPI is shared between TFT display and other devices. Disable async data transfer
+#endif
 
 #if ENABLED(TFT_LVGL_UI)
   #define MKS_WIFI_MODULE  // MKS WiFi module
@@ -3363,16 +3426,19 @@ EEPROM_W25Q
  * luminance values can be set from 0 to 255.
  * For NeoPixel LED an overall brightness parameter is also available.
  *
- * *** CAUTION ***
+ *  === CAUTION ===
  *  LED Strips require a MOSFET Chip between PWM lines and LEDs,
  *  as the Arduino cannot handle the current the LEDs will require.
  *  Failure to follow this precaution can destroy your Arduino!
+ *
  *  NOTE: A separate 5V power supply is required! The NeoPixel LED needs
  *  more current than the Arduino 5V linear regulator can produce.
- * *** CAUTION ***
  *
- * LED Type. Enable only one of the following two options.
+ *  Requires PWM frequency between 50 <> 100Hz (Check HAL or variant)
+ *  Use FAST_PWM_FAN, if possible, to reduce fan noise.
  */
+
+// LED Type. Enable only one of the following two options:
 //#define RGB_LED
 //#define RGBW_LED
 
@@ -3381,6 +3447,10 @@ EEPROM_W25Q
   //#define RGB_LED_G_PIN 43
   //#define RGB_LED_B_PIN 35
   //#define RGB_LED_W_PIN -1
+  //#define RGB_STARTUP_TEST              // For PWM pins, fade between all colors
+  #if ENABLED(RGB_STARTUP_TEST)
+    #define RGB_STARTUP_TEST_INNER_MS 10  // (ms) Reduce or increase fading speed
+  #endif
 #endif
 
 // Support for Adafruit NeoPixel LED driver
@@ -3402,6 +3472,7 @@ EEPROM_W25Q
     #define NEOPIXEL2_PIXELS           15 // Number of LEDs in the second strip
     #define NEOPIXEL2_BRIGHTNESS      127 // Initial brightness (0-255)
     #define NEOPIXEL2_STARTUP_TEST        // Cycle through colors at startup
+    #define NEOPIXEL_M150_DEFAULT      -1 // Default strip for M150 without 'S'. Use -1 to set all by default.
   #else
     //#define NEOPIXEL2_INSERIES          // Default behavior is NeoPixel 2 in parallel
   #endif

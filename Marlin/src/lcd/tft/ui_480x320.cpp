@@ -45,6 +45,10 @@
   #include "../../feature/bedlevel/bedlevel.h"
 #endif
 
+#if ENABLED(CASE_LIGHT_ENABLE)
+  #include "../../feature/caselight.h"
+#endif
+
 void MarlinUI::tft_idle() {
   #if ENABLED(TOUCH_SCREEN)
     if (TERN0(HAS_TOUCH_SLEEP, lcd_sleep_task())) return;
@@ -57,7 +61,8 @@ void MarlinUI::tft_idle() {
   #endif
 
   tft.queue.async();
-  TERN_(TOUCH_SCREEN, touch.idle());
+
+  TERN_(TOUCH_SCREEN, if (tft.queue.is_empty()) touch.idle()); // Touch driver is not DMA-aware, so only check for touch controls after screen drawing is completed
 }
 
 #if ENABLED(SHOW_BOOTSCREEN)
@@ -216,6 +221,45 @@ void draw_fan_status(uint16_t x, uint16_t y, const bool blink) {
   tft.add_text(tft_string.center(80) + 6, 82, COLOR_FAN, tft_string);
 }
 
+// Drawing of case light button
+void draw_lamp_status(uint16_t x, uint16_t y) {
+#if ENABLED(CASE_LIGHT_ENABLE)
+  TERN_(TOUCH_SCREEN, touch.add_control(LAMP, x, y, 80, 120));
+  tft.canvas(x, y, 80, 120);
+  tft.set_background(COLOR_BACKGROUND);
+
+    MarlinImage image;
+    uint16_t Color;
+
+  if (caselight.on) {
+    image = imgLampOn;
+    Color = COLOR_AXIS_HOMED;
+
+    #if ENABLED(CASELIGHT_USES_BRIGHTNESS)
+      if (caselight.has_brightness) {
+        tft_string.set(ui8tostr4pctrj(caselight.brightness));
+      }
+      else {
+    #else 
+      {
+    #endif    
+        tft_string.set(GET_TEXT_F(MSG_LCD_ON));
+      }
+  }
+  else {
+    image = imgLampOff;
+    Color = COLOR_FAN;
+    tft_string.set(GET_TEXT_F(MSG_LCD_OFF));
+  }
+  
+  tft.add_image(8, 20, image, Color);
+
+  //tft_string.set(ui8tostr4pctrj(thermalManager.fan_speed[0]));
+  tft_string.trim();
+  tft.add_text(tft_string.center(80) + 2, 82, Color, tft_string);
+#endif
+}
+
 void MarlinUI::draw_status_screen() {
   const bool blink = get_blink();
 
@@ -247,6 +291,9 @@ void MarlinUI::draw_status_screen() {
       #endif
       #ifdef ITEM_FAN
         case ITEM_FAN: draw_fan_status(x, y, blink); break;
+      #endif
+      #ifdef ITEM_LAMP                                      /* case light button*/
+        case ITEM_LAMP: draw_lamp_status(x, y); break;
       #endif
     }
   }
@@ -319,7 +366,10 @@ void MarlinUI::draw_status_screen() {
 
   #if ENABLED(TOUCH_SCREEN)
     add_control(404, y, menu_main, imgSettings);
-    TERN_(SDSUPPORT, add_control(12, y, menu_media, imgSD, !printingIsActive(), COLOR_CONTROL_ENABLED, card.isMounted() && printingIsActive() ? COLOR_BUSY : COLOR_CONTROL_DISABLED));
+    #if ENABLED(SDSUPPORT)
+      const bool cm = card.isMounted(), pa = printingIsActive();
+      add_control(12, y, menu_media, imgSD, cm && !pa, COLOR_CONTROL_ENABLED, cm && pa ? COLOR_BUSY : COLOR_CONTROL_DISABLED);
+    #endif
   #endif
 
   y += TERN(HAS_UI_480x272, 36, 44);
