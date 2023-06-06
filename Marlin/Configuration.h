@@ -741,7 +741,7 @@ RN13S           - плата Robin Nano-s 1.3
 // Above this temperature the heater will be switched off.
 // This can protect components from overheating, but NOT from shorts and failures.
 // (Use MINTEMP for thermistor short/failure protection.)
-#define HEATER_0_MAXTEMP 275
+#define HEATER_0_MAXTEMP 300
 #define HEATER_1_MAXTEMP 275
 #define HEATER_2_MAXTEMP 275
 #define HEATER_3_MAXTEMP 275
@@ -789,9 +789,9 @@ RN13S           - плата Robin Nano-s 1.3
     #define DEFAULT_Ki_LIST {   1.08,   1.08 }
     #define DEFAULT_Kd_LIST { 114.00, 114.00 }
   #else
-    #define DEFAULT_Kp  17.3
-    #define DEFAULT_Ki   1.74
-    #define DEFAULT_Kd  42.9
+    #define DEFAULT_Kp  15.8
+    #define DEFAULT_Ki  2.47
+    #define DEFAULT_Kd  25.3
   #endif
 #endif
 
@@ -874,9 +874,9 @@ RN13S           - плата Robin Nano-s 1.3
 
   // 120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
   // from FOPDT model - kp=.39 Tp=405 Tdead=66, Tc set to 79.2, aggressive factor of .15 (vs .1, 1, 10)
-  #define DEFAULT_bedKp 41.4
-  #define DEFAULT_bedKi 7.29
-  #define DEFAULT_bedKd 156.8
+  #define DEFAULT_bedKp 68.0
+  #define DEFAULT_bedKi 12.89
+  #define DEFAULT_bedKd 239.5
   // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
 #endif // PIDTEMPBED
 
